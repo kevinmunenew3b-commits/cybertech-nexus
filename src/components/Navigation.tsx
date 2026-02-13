@@ -8,6 +8,7 @@ const navLinks = [
   { name: 'About', href: '#about', isSection: true },
   { name: 'Services', href: '#services', isSection: true },
   { name: 'Projects', href: '/projects', isSection: false },
+  { name: 'Zero Day', href: '/zero-day', isSection: false },
   { name: 'Profinder', href: '#profinder', isSection: true },
   { name: 'Contact', href: '#contact', isSection: true },
 ];
