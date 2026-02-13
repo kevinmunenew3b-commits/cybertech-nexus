@@ -11,6 +11,7 @@ import {
   Instagram,
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 /* =======================
    Social Links
@@ -50,18 +51,29 @@ const ContactSection = () => {
     setIsSubmitting(true);
 
     try {
-      await new Promise(res => setTimeout(res, 800));
+      const { data, error } = await supabase.functions.invoke('send-contact-email', {
+        body: {
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        },
+      });
+
+      if (error) throw error;
 
       toast({
         title: 'Message sent 🚀',
-        description: 'I’ll get back to you shortly.',
+        description: "I'll get back to you shortly.",
       });
 
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: '',
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch (error: any) {
+      console.error('Contact form error:', error);
+      toast({
+        title: 'Error sending message',
+        description: 'Please try again or email me directly.',
+        variant: 'destructive',
       });
     } finally {
       setIsSubmitting(false);
@@ -74,7 +86,7 @@ const ContactSection = () => {
       ref={ref}
       className="py-24 relative bg-card/30"
     >
-      {/* Decorative overlay – SAFE */}
+      {/* Decorative overlay */}
       <div className="absolute inset-0 cyber-grid opacity-20 pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10">

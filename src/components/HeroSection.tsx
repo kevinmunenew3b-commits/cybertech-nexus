@@ -117,7 +117,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden cyber-grid">
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden cyber-grid pt-20 md:pt-0">
 
       <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-background pointer-events-none" />
 
