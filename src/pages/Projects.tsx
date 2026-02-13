@@ -4,9 +4,7 @@ import { Link } from 'react-router-dom';
 
 import project1 from '@/assets/project-1.jpg';
 import project2 from '@/assets/project-2.jpg';
-import project3 from '@/assets/project-3.jpg';
-import project4 from '@/assets/project-4.jpg';
-import redreconImg from '@/assets/recon.png'; // ← your generated RedRecon image
+import redreconImg from '@/assets/recon.png';
 
 /* ================================
    CENTRAL SUPPORT LINKS
@@ -22,46 +20,6 @@ const SUPPORT_LINKS = {
 const projects = [
   {
     id: 1,
-    title: 'Network Security Scanner',
-    description:
-      'Advanced vulnerability scanner for enterprise networks with real-time threat detection and automated reporting.',
-    image: project1,
-    tags: ['Python', 'Nmap', 'Docker'],
-    liveUrl: 'https://github.com/kevin2tec/net-scanner',
-    githubUrl: 'https://github.com/kevin2tec/net-scanner',
-  },
-  {
-    id: 2,
-    title: 'Penetration Testing Framework',
-    description:
-      'Custom pentesting toolkit with automated exploitation modules and comprehensive security assessment features.',
-    image: project2,
-    tags: ['Python', 'Metasploit', 'Bash'],
-    liveUrl: 'https://github.com/kevin2tec/pentest-framework',
-    githubUrl: 'https://github.com/kevin2tec/pentest-framework',
-  },
-  {
-    id: 3,
-    title: 'Cloud Security Monitor',
-    description:
-      'Real-time cloud infrastructure monitoring with automated compliance checking and threat detection.',
-    image: project3,
-    tags: ['AWS', 'Terraform', 'Go'],
-    liveUrl: 'https://github.com/kevin2tec/cloud-monitor',
-    githubUrl: 'https://github.com/kevin2tec/cloud-monitor',
-  },
-  {
-    id: 4,
-    title: 'Bug Bounty Recon Toolkit',
-    description:
-      'Automated reconnaissance and vulnerability discovery toolkit for bug bounty hunting with subdomain enumeration and endpoint fuzzing.',
-    image: project4,
-    tags: ['Python', 'Go', 'Bash', 'Burp Suite'],
-    liveUrl: 'https://github.com/kevin2tec/bb-recon',
-    githubUrl: 'https://github.com/kevin2tec/bb-recon',
-  },
-  {
-    id: 5,
     title: 'RedRecon',
     description:
       'Passive and active web reconnaissance tool that discovers endpoints, JS files, exposed secrets, and technology stacks with real-time terminal output.',
@@ -69,6 +27,26 @@ const projects = [
     tags: ['Python', 'Recon', 'Security', 'Terminal'],
     liveUrl: 'https://github.com/kevin2tec/redrecon',
     githubUrl: 'https://github.com/kevin2tec/redrecon',
+  },
+  {
+    id: 2,
+    title: '404Trick',
+    description:
+      'Bug bounty hunting tool designed to find hidden bugs and vulnerabilities. Lets you discover those elusive security flaws.',
+    image: project1,
+    tags: ['Python', 'Bug Bounty', 'Security'],
+    liveUrl: 'https://github.com/kevin2tec/404Trick',
+    githubUrl: 'https://github.com/kevin2tec/404Trick',
+  },
+  {
+    id: 3,
+    title: 'U-SEARCH',
+    description:
+      'OSINT username search tool for discovering accounts across multiple platforms. Powerful reconnaissance utility for security researchers.',
+    image: project2,
+    tags: ['Python', 'OSINT', 'Recon'],
+    liveUrl: 'https://github.com/kevin2tec/U-SEARCH',
+    githubUrl: 'https://github.com/kevin2tec/U-SEARCH',
   },
 ];
 
