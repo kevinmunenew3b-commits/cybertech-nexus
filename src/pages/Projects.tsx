@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, Github, Heart, ArrowLeft } from 'lucide-react';
+import { ExternalLink, Github, Heart, ArrowLeft, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import project1 from '@/assets/project-1.jpg';
 import project2 from '@/assets/project-2.jpg';
+import project3 from '@/assets/project-3.jpg';
 import redreconImg from '@/assets/recon.png';
 
 /* ================================
@@ -47,6 +48,17 @@ const projects = [
     tags: ['Python', 'OSINT', 'Recon'],
     liveUrl: 'https://github.com/kevin2tec/U-SEARCH',
     githubUrl: 'https://github.com/kevin2tec/U-SEARCH',
+  },
+  {
+    id: 4,
+    title: 'CyberShield Portfolio',
+    description:
+      'A sleek, hacker-themed portfolio website built with React, TypeScript & Tailwind CSS. Features matrix rain animations, glitch effects, and a fully functional contact system.',
+    image: project3,
+    tags: ['React', 'TypeScript', 'Tailwind', 'Framer Motion'],
+    liveUrl: '#',
+    githubUrl: '#',
+    isPurchasable: true,
   },
 ];
 
@@ -138,25 +150,36 @@ const Projects = () => {
                   </div>
 
                   <div className="flex flex-wrap gap-4 text-sm font-mono">
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 hover:text-primary transition-colors"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                      Live
-                    </a>
-
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 hover:text-primary transition-colors"
-                    >
-                      <Github className="w-4 h-4" />
-                      Code
-                    </a>
+                    {(project as any).isPurchasable ? (
+                      <a
+                        href="/#contact"
+                        className="flex items-center gap-2 px-4 py-2 bg-primary/20 border border-primary/40 rounded-lg hover:bg-primary/30 text-primary transition-colors"
+                      >
+                        <ShoppingCart className="w-4 h-4" />
+                        Purchase — Contact Me
+                      </a>
+                    ) : (
+                      <>
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 hover:text-primary transition-colors"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          Live
+                        </a>
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 hover:text-primary transition-colors"
+                        >
+                          <Github className="w-4 h-4" />
+                          Code
+                        </a>
+                      </>
+                    )}
 
                     <a
                       href={SUPPORT_LINKS.buyMeCoffee}

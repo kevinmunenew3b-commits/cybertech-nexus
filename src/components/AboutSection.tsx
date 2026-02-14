@@ -4,12 +4,13 @@ import { useRef } from 'react';
 import { Shield, Bug, Lock, Code, Server, Zap, Target, Wifi, Database } from 'lucide-react';
 
 const skills = [
+  { name: 'Web Development', icon: Code, level: 90 },
   { name: 'Penetration Testing', icon: Bug, level: 95 },
   { name: 'Bug Bounty Hunting', icon: Target, level: 93 },
   { name: 'Network Security', icon: Server, level: 90 },
-  { name: 'Web App Security', icon: Code, level: 92 },
+  { name: 'Web App Security', icon: Shield, level: 92 },
   { name: 'Wireless Attacks', icon: Wifi, level: 85 },
-  { name: 'Incident Response', icon: Zap, level: 90 },
+  { name: 'Database & Backend', icon: Database, level: 88 },
 ];
 
 const certifications = [
@@ -58,13 +59,14 @@ const AboutSection = () => {
                 // whoami
               </div>
               <h3 className="text-2xl font-bold mb-4 text-foreground">
-                Pentester & Bug Bounty Hunter
+                Developer, Pentester & Bug Bounty Hunter
               </h3>
               <div className="space-y-4 text-muted-foreground leading-relaxed">
              <p>
-  I live in the terminal. Still learning, still exploring, and constantly sharpening my skills in 
-  <span className="text-primary font-semibold"> offensive security</span>. I enjoy understanding how systems break 
-  so they can be built stronger. From web applications to networks, every target is an opportunity to learn.
+  I live in the terminal. I'm a <span className="text-primary font-semibold">developer</span> who builds modern web applications 
+  and a passionate explorer of <span className="text-primary font-semibold">offensive security</span>. I enjoy understanding 
+  how systems work — and how they break — so they can be built stronger. From full-stack apps to network pentesting, 
+  every project is an opportunity to learn.
 </p>
 
 <p>
