@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, Github, Heart, ArrowLeft, ShoppingCart } from 'lucide-react';
+import { ExternalLink, Github, Heart, ArrowLeft, ShoppingCart, ThumbsUp, Share2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 import project1 from '@/assets/project-1.jpg';
 import project2 from '@/assets/project-2.jpg';
@@ -28,6 +31,7 @@ const projects = [
     tags: ['Python', 'Recon', 'Security', 'Terminal'],
     liveUrl: 'https://github.com/kevin2tec/redrecon',
     githubUrl: 'https://github.com/kevin2tec/redrecon',
+    isPurchasable: false,
   },
   {
     id: 2,
@@ -38,6 +42,7 @@ const projects = [
     tags: ['Python', 'Bug Bounty', 'Security'],
     liveUrl: 'https://github.com/kevin2tec/404Trick',
     githubUrl: 'https://github.com/kevin2tec/404Trick',
+    isPurchasable: false,
   },
   {
     id: 3,
@@ -48,6 +53,7 @@ const projects = [
     tags: ['Python', 'OSINT', 'Recon'],
     liveUrl: 'https://github.com/kevin2tec/U-SEARCH',
     githubUrl: 'https://github.com/kevin2tec/U-SEARCH',
+    isPurchasable: false,
   },
   {
     id: 4,
@@ -61,6 +67,91 @@ const projects = [
     isPurchasable: true,
   },
 ];
+
+/* ================================
+   LIKE BUTTON COMPONENT
+================================ */
+const LikeButton = ({ projectId }: { projectId: number }) => {
+  const [count, setCount] = useState(0);
+  const [liked, setLiked] = useState(false);
+  const [animating, setAnimating] = useState(false);
+
+  useEffect(() => {
+    // Check localStorage
+    const likedProjects = JSON.parse(localStorage.getItem('liked_projects') || '[]');
+    setLiked(likedProjects.includes(projectId));
+
+    // Fetch count
+    supabase
+      .from('project_likes')
+      .select('id', { count: 'exact', head: true })
+      .eq('project_id', projectId)
+      .then(({ count: c }) => setCount(c ?? 0));
+  }, [projectId]);
+
+  const handleLike = async () => {
+    if (liked) return;
+
+    setAnimating(true);
+    setTimeout(() => setAnimating(false), 600);
+
+    const { error } = await supabase
+      .from('project_likes')
+      .insert({ project_id: projectId });
+
+    if (!error) {
+      setCount((c) => c + 1);
+      setLiked(true);
+      const likedProjects = JSON.parse(localStorage.getItem('liked_projects') || '[]');
+      localStorage.setItem('liked_projects', JSON.stringify([...likedProjects, projectId]));
+    }
+  };
+
+  return (
+    <button
+      onClick={handleLike}
+      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-sm font-mono transition-all ${
+        liked
+          ? 'bg-primary/20 border-primary/50 text-primary'
+          : 'border-primary/20 text-muted-foreground hover:text-primary hover:border-primary/40'
+      }`}
+    >
+      <ThumbsUp
+        className={`w-4 h-4 transition-transform ${animating ? 'scale-125' : ''} ${liked ? 'fill-primary' : ''}`}
+      />
+      {count}
+    </button>
+  );
+};
+
+/* ================================
+   SHARE BUTTON COMPONENT
+================================ */
+const ShareButton = ({ title, url }: { title: string; url: string }) => {
+  const { toast } = useToast();
+
+  const handleShare = async () => {
+    const shareUrl = url.startsWith('http') ? url : window.location.origin + url;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, url: shareUrl });
+      } catch {}
+    } else {
+      await navigator.clipboard.writeText(shareUrl);
+      toast({ title: 'Link copied!', description: `${title} link copied to clipboard.` });
+    }
+  };
+
+  return (
+    <button
+      onClick={handleShare}
+      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-primary/20 text-muted-foreground text-sm font-mono hover:text-primary hover:border-primary/40 transition-all"
+    >
+      <Share2 className="w-4 h-4" />
+      Share
+    </button>
+  );
+};
 
 /* ================================
    PROJECTS COMPONENT
@@ -113,7 +204,7 @@ const Projects = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="card-cyber overflow-hidden"
               >
-                {/* IMAGE → GITHUB PROFILE */}
+                {/* IMAGE */}
                 <a
                   href={SUPPORT_LINKS.github}
                   target="_blank"
@@ -149,8 +240,8 @@ const Projects = () => {
                     ))}
                   </div>
 
-                  <div className="flex flex-wrap gap-4 text-sm font-mono">
-                    {(project as any).isPurchasable ? (
+                  <div className="flex flex-wrap items-center gap-3 text-sm font-mono">
+                    {project.isPurchasable ? (
                       <a
                         href="/#contact"
                         className="flex items-center gap-2 px-4 py-2 bg-primary/20 border border-primary/40 rounded-lg hover:bg-primary/30 text-primary transition-colors"
@@ -181,14 +272,8 @@ const Projects = () => {
                       </>
                     )}
 
-                    <a
-                      href={SUPPORT_LINKS.buyMeCoffee}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:text-primary transition-colors"
-                    >
-                      ☕ Support
-                    </a>
+                    <LikeButton projectId={project.id} />
+                    <ShareButton title={project.title} url={project.githubUrl} />
                   </div>
                 </div>
               </motion.div>
