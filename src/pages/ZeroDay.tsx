@@ -1,7 +1,90 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, AlertTriangle, Clock, Shield, Bug, ExternalLink, ChevronRight } from 'lucide-react';
+import { ArrowLeft, AlertTriangle, Clock, Shield, Bug, ExternalLink, ChevronRight, ThumbsUp, Heart, Share2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 import zerodayOpenaiImg from '@/assets/zeroday-openai.jpg';
+
+/* ================================
+   LIKE BUTTON (report-level)
+================================ */
+const ReportLikeButton = ({ reportId }: { reportId: number }) => {
+  const [count, setCount] = useState(0);
+  const [liked, setLiked] = useState(false);
+  const [animating, setAnimating] = useState(false);
+
+  useEffect(() => {
+    const key = 'liked_reports';
+    const likedReports = JSON.parse(localStorage.getItem(key) || '[]');
+    setLiked(likedReports.includes(reportId));
+
+    supabase
+      .from('project_likes')
+      .select('id', { count: 'exact', head: true })
+      .eq('project_id', reportId + 100) // offset to avoid collision with project IDs
+      .then(({ count: c }) => setCount(c ?? 0));
+  }, [reportId]);
+
+  const handleLike = async () => {
+    if (liked) return;
+    setAnimating(true);
+    setTimeout(() => setAnimating(false), 600);
+
+    const { error } = await supabase
+      .from('project_likes')
+      .insert({ project_id: reportId + 100 });
+
+    if (!error) {
+      setCount((c) => c + 1);
+      setLiked(true);
+      const key = 'liked_reports';
+      const likedReports = JSON.parse(localStorage.getItem(key) || '[]');
+      localStorage.setItem(key, JSON.stringify([...likedReports, reportId]));
+    }
+  };
+
+  return (
+    <button
+      onClick={handleLike}
+      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-sm font-mono transition-all ${
+        liked
+          ? 'bg-primary/20 border-primary/50 text-primary'
+          : 'border-primary/20 text-muted-foreground hover:text-primary hover:border-primary/40'
+      }`}
+    >
+      <ThumbsUp
+        className={`w-4 h-4 transition-transform ${animating ? 'scale-125' : ''} ${liked ? 'fill-primary' : ''}`}
+      />
+      {count}
+    </button>
+  );
+};
+
+/* ================================
+   SHARE BUTTON
+================================ */
+const ReportShareButton = ({ title }: { title: string }) => {
+  const { toast } = useToast();
+  const handleShare = async () => {
+    const shareUrl = window.location.href;
+    if (navigator.share) {
+      try { await navigator.share({ title, url: shareUrl }); } catch {}
+    } else {
+      await navigator.clipboard.writeText(shareUrl);
+      toast({ title: 'Link copied!', description: 'Zero-day report link copied to clipboard.' });
+    }
+  };
+  return (
+    <button
+      onClick={handleShare}
+      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-primary/20 text-muted-foreground text-sm font-mono hover:text-primary hover:border-primary/40 transition-all"
+    >
+      <Share2 className="w-4 h-4" />
+      Share
+    </button>
+  );
+};
 
 const reports = [
   {
@@ -216,6 +299,21 @@ const ZeroDay = () => {
                         {report.techDetails}
                       </p>
                     </div>
+                  </div>
+
+                  {/* Like & Support */}
+                  <div className="flex flex-wrap items-center gap-3 mb-6">
+                    <ReportLikeButton reportId={report.id} />
+                    <ReportShareButton title={report.title} />
+                    <a
+                      href="https://coff.ee/kevinw3b"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-primary/20 text-muted-foreground text-sm font-mono hover:text-primary hover:border-primary/40 transition-all"
+                    >
+                      <Heart className="w-4 h-4" />
+                      Support
+                    </a>
                   </div>
 
                   {/* Footer */}
