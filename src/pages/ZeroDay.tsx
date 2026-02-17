@@ -67,7 +67,7 @@ const ReportLikeButton = ({ reportId }: { reportId: number }) => {
 const ReportShareButton = ({ title }: { title: string }) => {
   const { toast } = useToast();
   const handleShare = async () => {
-    const shareUrl = window.location.href;
+    const shareUrl = 'https://kevinw3bcodes.web.app/';
     if (navigator.share) {
       try { await navigator.share({ title, url: shareUrl }); } catch {}
     } else {
