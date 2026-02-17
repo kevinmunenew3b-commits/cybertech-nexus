@@ -139,11 +139,11 @@ const LikeButton = ({ projectId }: { projectId: number }) => {
 /* ================================
    SHARE BUTTON COMPONENT
 ================================ */
-const ShareButton = ({ title, url }: { title: string; url: string }) => {
+const ShareButton = ({ title }: { title: string }) => {
   const { toast } = useToast();
 
   const handleShare = async () => {
-    const shareUrl = url.startsWith('http') ? url : window.location.origin + url;
+    const shareUrl = 'https://kevinw3bcodes.web.app/';
     if (navigator.share) {
       try {
         await navigator.share({ title, url: shareUrl });
@@ -287,7 +287,7 @@ const Projects = () => {
                     )}
 
                     <LikeButton projectId={project.id} />
-                    <ShareButton title={project.title} url={project.githubUrl} />
+                    <ShareButton title={project.title} />
                   </div>
                 </div>
               </motion.div>
