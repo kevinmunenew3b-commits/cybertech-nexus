@@ -9,6 +9,7 @@ import project1 from '@/assets/project-1.jpg';
 import project2 from '@/assets/project-2.jpg';
 import project3 from '@/assets/project-3.jpg';
 import redreconImg from '@/assets/recon.png';
+import cybervaultImg from '@/assets/cybervault.jpg';
 
 /* ================================
    CENTRAL SUPPORT LINKS
@@ -62,6 +63,17 @@ const projects = [
       'A sleek, hacker-themed portfolio website built with React, TypeScript & Tailwind CSS. Features matrix rain animations, glitch effects, and a fully functional contact system.',
     image: project3,
     tags: ['React', 'TypeScript', 'Tailwind', 'Framer Motion'],
+    liveUrl: '#',
+    githubUrl: '#',
+    isPurchasable: true,
+  },
+  {
+    id: 5,
+    title: 'CyberVault',
+    description:
+      'A terminal-based financial engine that lets you move money from crypto, card-to-card, card-to-crypto, or card-to-bank — completely anonymous and secure.',
+    image: cybervaultImg,
+    tags: ['Python', 'Finance', 'Crypto', 'Terminal'],
     liveUrl: '#',
     githubUrl: '#',
     isPurchasable: true,
@@ -243,7 +255,9 @@ const Projects = () => {
                   <div className="flex flex-wrap items-center gap-3 text-sm font-mono">
                     {project.isPurchasable ? (
                       <a
-                        href="/#contact"
+                        href={`https://mail.google.com/mail/?view=cm&to=bytebugtech@gmail.com&su=${encodeURIComponent('Purchase Inquiry: ' + project.title)}&body=${encodeURIComponent('Hi, I am interested in purchasing ' + project.title + '. Please provide more details.')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="flex items-center gap-2 px-4 py-2 bg-primary/20 border border-primary/40 rounded-lg hover:bg-primary/30 text-primary transition-colors"
                       >
                         <ShoppingCart className="w-4 h-4" />
