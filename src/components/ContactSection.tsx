@@ -10,8 +10,6 @@ import {
   Terminal,
   Instagram,
 } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
 
 /* =======================
    Social Links
@@ -26,7 +24,6 @@ const socialLinks = [
 const ContactSection = () => {
   const ref = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const { toast } = useToast();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -35,8 +32,6 @@ const ContactSection = () => {
     message: '',
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -44,40 +39,19 @@ const ContactSection = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (isSubmitting) return;
 
-    setIsSubmitting(true);
+    const to = 'bytebugtech@gmail.com';
+    const subject = encodeURIComponent(formData.subject);
+    const body = encodeURIComponent(
+      `Hi, my name is ${formData.name} (${formData.email}).\n\n${formData.message}`
+    );
 
-    try {
-      const { error } = await supabase
-        .from('contact_messages')
-        .insert({
-          name: formData.name,
-          email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-        });
-
-      if (error) throw error;
-
-      toast({
-        title: 'Message sent 🚀',
-        description: "I'll get back to you shortly.",
-      });
-
-      setFormData({ name: '', email: '', subject: '', message: '' });
-    } catch (error: any) {
-      console.error('Contact form error:', error);
-      toast({
-        title: 'Error sending message',
-        description: 'Please try again or email me directly.',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    window.open(
+      `https://mail.google.com/mail/?view=cm&to=${to}&su=${subject}&body=${body}`,
+      '_blank'
+    );
   };
 
   return (
@@ -222,18 +196,14 @@ const ContactSection = () => {
 
             <button
               type="submit"
-              disabled={isSubmitting}
               className="
                 relative z-10 pointer-events-auto
                 btn-cyber-filled w-full
                 flex items-center justify-center gap-2
-                disabled:opacity-50
               "
             >
-              {isSubmitting ? 'Sending…' : <>
-                <Send className="w-4 h-4 pointer-events-none" />
-                Send Message
-              </>}
+              <Send className="w-4 h-4 pointer-events-none" />
+              Send Message
             </button>
           </motion.form>
         </div>
