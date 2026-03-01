@@ -1,0 +1,93 @@
+KEVIN MUNENE
+Frontend Developer | Python Developer | Backend Developer | Cybersecurity Enthusiast
+Kenya | 📧 boatqofficial@gmail.com | 0741074468
+Portfolio: kevinw3bcodes.web.app
+
+================================================================================
+PROFESSIONAL SUMMARY
+================================================================================
+Skilled Full-Stack Frontend Developer and Penetration Tester with extensive
+experience in React/Next.js, Python, and cybersecurity. Competed in numerous CTF
+competitions, discovered and reported vulnerabilities for companies including
+OpenAI and Lovable, and built custom tools to aid bug hunters. Adept at combining
+secure coding practices with innovative development to deliver fast, scalable,
+and secure web applications.
+
+================================================================================
+TECHNICAL SKILLS
+================================================================================
+Frontend / Development:
+  React.js, Next.js, JavaScript (ES6+), HTML5, CSS3, Tailwind CSS,
+  Responsive UI/UX
+
+Programming:
+  Python, JavaScript
+
+Cybersecurity / Pentesting:
+  • Linux penetration testing tools (Kali, Parrot OS, custom scripts)
+  • Web application & network vulnerability assessments
+  • Bug bounty experience (OpenAI, Lovable, etc.)
+  • CTF competitions
+  • Custom pentesting tools development
+
+Tools & Platforms:
+  Git & GitHub, VS Code, Vercel, Firebase, Supabase, REST APIs
+
+================================================================================
+PROJECT EXPERIENCE
+================================================================================
+Portfolio Projects — kevinw3bcodes.web.app
+  • Built scalable, production-ready web applications using React and Next.js
+  • Integrated secure authentication systems and backend services
+  • Applied cybersecurity best practices to protect user data
+  • Deployed responsive and high-performance applications
+
+CTF & Bug Bounty Experience
+  • Competed in multiple Capture The Flag (CTF) competitions, solving complex
+    web, crypto, and network challenges
+  • Discovered and responsibly disclosed vulnerabilities in high-profile
+    companies including OpenAI and Lovable
+  • Built custom tools and scripts to streamline bug hunting and penetration
+    testing
+
+Linux / Tool Development
+  • Experienced in Linux-based pentesting tools and workflows
+  • Developed custom automation scripts and tools to assist security researchers
+    and bug hunters
+  GitHub repositories are private but fully available upon request
+
+================================================================================
+EXPERIENCE
+================================================================================
+Frontend Developer / Web Developer / Backend Developer / Pentester
+Freelance / Personal Projects
+
+  • Designed and developed dynamic dashboards and interactive UI components
+  • Integrated APIs and backend services
+  • Applied penetration testing knowledge to enhance web application security
+  • Developed custom automation scripts and tools to assist security researchers
+    and bug hunters
+  • Optimized web applications for speed, responsiveness, and security
+  • Managed version control using Git
+
+CTF & Bug Bounty Experience
+  • Competed in multiple Capture The Flag (CTF) competitions
+  • Discovered and responsibly disclosed vulnerabilities in high-profile
+    companies including OpenAI and Lovable
+  • Built custom tools and scripts to streamline bug hunting and penetration
+    testing
+
+================================================================================
+EDUCATION
+================================================================================
+Bachelor's Degree (Currently Pursuing)
+The Co-operative University of Kenya, Kenya
+
+================================================================================
+CORE STRENGTHS
+================================================================================
+  • Secure coding and cybersecurity awareness
+  • Problem-solving & analytical thinking
+  • Passionate about modern web development and technologies
+  • Fast learner, adaptable, and detail-oriented
+  • Passion for web development, Python, and cybersecurity
