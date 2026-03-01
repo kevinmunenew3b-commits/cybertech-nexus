@@ -10,6 +10,12 @@ import zerodayHeartbleedImg from '@/assets/zeroday-heartbleed.jpg';
 import zerodayShellshockImg from '@/assets/zeroday-shellshock.jpg';
 import zerodayProxylogonImg from '@/assets/zeroday-proxylogon.jpg';
 import zerodaySpectreImg from '@/assets/zeroday-spectre.jpg';
+import zerodayLovableImg from '@/assets/zeroday-lovable.jpg';
+import zerodayEternalblueImg from '@/assets/zeroday-eternalblue.jpg';
+import zerodaySolarwindsImg from '@/assets/zeroday-solarwinds.jpg';
+import zerodayMeltdownImg from '@/assets/zeroday-meltdown.jpg';
+import zerodayPegasusImg from '@/assets/zeroday-pegasus.jpg';
+import zerodayMoveitImg from '@/assets/zeroday-moveit.jpg';
 
 /* ================================
    LIKE BUTTON (report-level)
@@ -141,6 +147,33 @@ const myReports: Report[] = [
     ],
     techDetails:
       'The rate-limiting mechanism stores the usage window timestamp on the client side (likely via localStorage or a cookie tied to local time). When the system clock is changed, the client-side check calculates that the rate window has expired, allowing the user to bypass the quota without any server-side re-validation. This is a classic TOCTOU (Time-of-Check to Time-of-Use) flaw where the "check" happens on an untrusted client.',
+  },
+  {
+    id: 2,
+    title: 'Prompt Injection & Context Leakage in Lovable AI Code Generation Platform',
+    target: 'Lovable — AI Code Editor',
+    severity: 'Medium',
+    status: 'Reported',
+    date: '2025',
+    image: zerodayLovableImg,
+    tags: ['Zero-Day', 'Prompt Injection', 'AI Security', 'Lovable'],
+    summary:
+      'Discovered that carefully crafted prompts could manipulate the AI code generation engine to leak internal system prompts, bypass content restrictions, and generate potentially malicious code patterns. The vulnerability stems from insufficient input sanitization in the prompt processing pipeline.',
+    impact: [
+      'Exposure of internal system prompts and configuration details',
+      'Bypass of safety guardrails for code generation',
+      'Potential generation of code with embedded vulnerabilities',
+      'Information disclosure about the AI model architecture',
+    ],
+    steps: [
+      'Craft a specially formatted prompt with nested instruction overrides',
+      'Use role-playing techniques to bypass content filtering',
+      'Extract system prompt fragments through iterative probing',
+      'Leverage leaked context to craft more targeted injection payloads',
+      'Document the full attack chain for responsible disclosure',
+    ],
+    techDetails:
+      'The AI code generation platform processes user prompts alongside system-level instructions. By crafting inputs that mimic system-level formatting, an attacker can confuse the model\'s instruction hierarchy, causing it to treat attacker-controlled text as privileged instructions. This is a form of indirect prompt injection where the boundary between user input and system context is insufficiently enforced.',
   },
 ];
 
@@ -292,6 +325,151 @@ const notableReports: Report[] = [
       'Modern CPUs use speculative execution to predict and pre-execute instructions beyond conditional branches. While mispredicted speculations are architecturally rolled back, they leave observable side effects in the CPU cache. Spectre Variant 1 (bounds check bypass) exploits this by training the branch predictor to speculatively execute an out-of-bounds memory access, encoding the secret data into cache timing differences that can be measured by the attacker.',
     credit: 'Jann Horn (Google Project Zero), Paul Kocher et al.',
     cve: 'CVE-2017-5753',
+  },
+  {
+    id: 106,
+    title: 'EternalBlue — SMBv1 Remote Code Execution Exploited by WannaCry',
+    target: 'Microsoft Windows — SMBv1',
+    severity: 'Critical',
+    status: 'Patched',
+    date: '2017',
+    image: zerodayEternalblueImg,
+    tags: ['CVE-2017-0144', 'RCE', 'SMB', 'WannaCry', 'NSA'],
+    summary:
+      'A devastating vulnerability in Microsoft\'s SMBv1 protocol originally developed as a cyberweapon by the NSA. After being leaked by the Shadow Brokers group, it was weaponized in the WannaCry ransomware attack that infected over 230,000 computers across 150 countries in a single day.',
+    impact: [
+      'WannaCry ransomware infected 230,000+ systems in 150 countries',
+      'Estimated $4–8 billion in damages globally',
+      'Crippled the UK National Health Service, causing cancelled surgeries',
+      'Self-propagating worm capability — no user interaction required',
+    ],
+    steps: [
+      'Scan for systems with SMBv1 port 445 open',
+      'Send specially crafted SMB packets that trigger a buffer overflow',
+      'The overflow allows writing shellcode into kernel memory',
+      'Execute arbitrary code with SYSTEM privileges remotely',
+      'Propagate to other vulnerable systems on the network automatically',
+    ],
+    techDetails:
+      'EternalBlue exploits a buffer overflow in Microsoft\'s SMBv1 protocol handling. Specifically, it targets the way SMBv1 handles transaction structures, allowing an attacker to send malformed packets that cause a pool buffer overflow in the Windows kernel. This allows writing attacker-controlled data to kernel memory, achieving remote code execution at the highest privilege level without any authentication.',
+    credit: 'NSA (developed) / Shadow Brokers (leaked)',
+    cve: 'CVE-2017-0144',
+  },
+  {
+    id: 107,
+    title: 'SolarWinds SUNBURST — Supply Chain Backdoor in Orion Platform',
+    target: 'SolarWinds — Orion Platform',
+    severity: 'Critical',
+    status: 'Patched',
+    date: '2020',
+    image: zerodaySolarwindsImg,
+    tags: ['Supply Chain', 'Backdoor', 'APT29', 'Espionage'],
+    summary:
+      'One of the most sophisticated supply chain attacks in history. Russian state-sponsored actors (APT29/Cozy Bear) compromised SolarWinds\' build system to inject a backdoor (SUNBURST) into the Orion software update. The trojanized update was distributed to approximately 18,000 organizations including US government agencies.',
+    impact: [
+      'Compromised 18,000+ organizations including US Treasury and DHS',
+      'Backdoor remained undetected for 9+ months',
+      'Full access to victim networks including email and file systems',
+      'Considered the most significant cyber-espionage operation of the decade',
+    ],
+    steps: [
+      'Attackers compromised SolarWinds build infrastructure',
+      'Injected SUNBURST backdoor into Orion software updates',
+      'Trojanized updates were signed with legitimate SolarWinds certificates',
+      'SUNBURST activated after 2-week dormancy, contacted C2 via DNS',
+      'Attackers moved laterally using stolen credentials and forged SAML tokens',
+    ],
+    techDetails:
+      'The SUNBURST backdoor was injected into the SolarWinds.Orion.Core.BusinessLayer.dll during the build process. It used steganography in HTTP responses, domain generation algorithms for C2 communication disguised as legitimate Orion API traffic, and a 12-14 day dormancy period to evade sandbox analysis. The malware checked for security tools and avoided execution in monitored environments.',
+    credit: 'FireEye (Kevin Mandia\'s team)',
+    cve: 'N/A (Supply Chain)',
+  },
+  {
+    id: 108,
+    title: 'Meltdown — Rogue Data Cache Load on Intel Processors',
+    target: 'Intel — x86 Processors',
+    severity: 'Critical',
+    status: 'Mitigated',
+    date: '2018',
+    image: zerodayMeltdownImg,
+    tags: ['CVE-2017-5754', 'Hardware', 'Side-Channel', 'CPU', 'Intel'],
+    summary:
+      'A hardware vulnerability that breaks the fundamental isolation between user applications and the operating system kernel. Meltdown allows any unprivileged process to read all physical memory mapped in the kernel address space, including passwords, encryption keys, and other secrets — at speeds up to 500KB/s.',
+    impact: [
+      'Read all physical memory from an unprivileged userspace process',
+      'Bypass kernel address space layout randomization (KASLR)',
+      'Affects nearly every Intel processor since 1995',
+      'Cloud environments at risk — VMs could read host memory',
+    ],
+    steps: [
+      'Execute a transient instruction that loads kernel memory into a register',
+      'Before the CPU raises the privilege violation exception, use the data',
+      'Encode the secret data into the cache via a dependent memory access',
+      'After the exception, use Flush+Reload to determine which cache line was loaded',
+      'Reconstruct the secret byte from the cache side-channel',
+    ],
+    techDetails:
+      'Meltdown exploits out-of-order execution in Intel CPUs. When a user-space program accesses kernel memory, the CPU eventually raises an exception. However, before the exception is handled, the CPU has already speculatively executed subsequent instructions using the illegally accessed data. These transient instructions modify the cache state based on the kernel data, creating an observable side channel that survives the architectural rollback of the speculative execution.',
+    credit: 'Jann Horn (Google Project Zero), TU Graz (Daniel Gruss et al.)',
+    cve: 'CVE-2017-5754',
+  },
+  {
+    id: 109,
+    title: 'Pegasus — Zero-Click iOS Exploit Chain by NSO Group',
+    target: 'Apple iOS — iMessage',
+    severity: 'Critical',
+    status: 'Patched',
+    date: '2021',
+    image: zerodayPegasusImg,
+    tags: ['Zero-Click', 'Spyware', 'iOS', 'NSO Group', 'FORCEDENTRY'],
+    summary:
+      'A zero-click exploit chain used by NSO Group\'s Pegasus spyware to fully compromise iPhones without any user interaction. The attack leveraged a vulnerability in Apple\'s CoreGraphics PDF parsing (FORCEDENTRY) delivered via iMessage, bypassing Apple\'s BlastDoor sandbox — one of the most sophisticated mobile exploits ever documented.',
+    impact: [
+      'Full iPhone compromise with zero user interaction required',
+      'Access to messages, calls, camera, microphone, and location',
+      'Used to surveil journalists, activists, and political figures globally',
+      'Bypassed Apple\'s BlastDoor sandbox specifically designed to prevent such attacks',
+    ],
+    steps: [
+      'Attacker sends a malicious PDF disguised as a GIF via iMessage',
+      'iMessage automatically processes the attachment without user action',
+      'The PDF exploits a vulnerability in CoreGraphics JBIG2 decoder',
+      'JBIG2 logic gates are chained to build a virtual CPU architecture',
+      'The virtual CPU executes shellcode to escape sandbox and install Pegasus',
+    ],
+    techDetails:
+      'The FORCEDENTRY exploit used a JBIG2 image codec vulnerability to achieve arbitrary code execution. Remarkably, it constructed a small computer architecture using JBIG2\'s logical operations (AND, OR, XOR) to create logic gates, registers, and a full adder — essentially building a virtual CPU within the image decompressor. This virtual machine then executed the exploit payload, making it one of the most technically sophisticated exploits ever analyzed.',
+    credit: 'Citizen Lab (University of Toronto), Google Project Zero (Ian Beer & Samuel Groß)',
+    cve: 'CVE-2021-30860',
+  },
+  {
+    id: 110,
+    title: 'MOVEit Transfer — SQL Injection Leading to Mass Data Breach',
+    target: 'Progress Software — MOVEit Transfer',
+    severity: 'Critical',
+    status: 'Patched',
+    date: '2023',
+    image: zerodayMoveitImg,
+    tags: ['CVE-2023-34362', 'SQLi', 'Data Breach', 'Cl0p', 'Ransomware'],
+    summary:
+      'A critical SQL injection vulnerability in MOVEit Transfer\'s web application that was mass-exploited by the Cl0p ransomware gang. The flaw allowed unauthenticated attackers to access the database, steal data, and deploy web shells. Over 2,500 organizations and 67 million individuals were affected in one of the largest data breaches of 2023.',
+    impact: [
+      'Over 2,500 organizations breached including government agencies and banks',
+      '67+ million individuals had personal data stolen',
+      'Cl0p ransomware gang used it for mass extortion campaign',
+      'Estimated damages exceeding $10 billion across all victims',
+    ],
+    steps: [
+      'Send a crafted HTTP request to the MOVEit Transfer web application',
+      'Exploit SQL injection in the authentication bypass endpoint',
+      'Gain access to the underlying Azure SQL or MySQL database',
+      'Extract sensitive data and deploy a LEMURLOOT web shell',
+      'Maintain persistent access for ongoing data exfiltration',
+    ],
+    techDetails:
+      'The vulnerability existed in MOVEit Transfer\'s web application where user-supplied input was not properly sanitized before being used in SQL queries. The SQL injection allowed attackers to bypass authentication, enumerate database contents, and execute arbitrary SQL statements. The Cl0p group automated exploitation at scale, deploying web shells that provided persistent backdoor access for data theft operations.',
+    credit: 'Progress Software (disclosed after active exploitation by Cl0p)',
+    cve: 'CVE-2023-34362',
   },
 ];
 
