@@ -143,7 +143,7 @@ const ShareButton = ({ title }: { title: string }) => {
   const { toast } = useToast();
 
   const handleShare = async () => {
-    const shareUrl = 'https://kevinw3bcodes.web.app/';
+    const shareUrl = 'https://kevinw3bcodes.web.app/projects';
     if (navigator.share) {
       try {
         await navigator.share({ title, url: shareUrl });

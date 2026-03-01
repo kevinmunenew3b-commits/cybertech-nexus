@@ -7,6 +7,7 @@ const navLinks = [
   { name: 'Home', href: '#home', isSection: true },
   { name: 'About', href: '#about', isSection: true },
   { name: 'Services', href: '#services', isSection: true },
+  { name: 'Resume', href: '#resume', isSection: true },
   { name: 'Projects', href: '/projects', isSection: false },
   { name: 'Zero Day', href: '/zero-day', isSection: false },
   { name: 'Profinder', href: '#profinder', isSection: true },
