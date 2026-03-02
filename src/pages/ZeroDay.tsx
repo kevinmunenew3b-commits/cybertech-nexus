@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, AlertTriangle, Clock, Shield, Bug, ExternalLink, ChevronRight, ThumbsUp, Heart, Share2 } from 'lucide-react';
+import { ArrowLeft, AlertTriangle, Clock, Shield, Bug, ExternalLink, ChevronRight, ThumbsUp, Heart, Share2, LayoutGrid, LayoutList } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
@@ -483,16 +483,16 @@ const severityColor: Record<string, string> = {
 /* ================================
    REPORT CARD COMPONENT
 ================================ */
-const ReportCard = ({ report, index }: { report: Report; index: number }) => (
+const ReportCard = ({ report, index, compact = false }: { report: Report; index: number; compact?: boolean }) => (
   <motion.article
     key={report.id}
     initial={{ opacity: 0, y: 30 }}
     animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6, delay: index * 0.1 }}
+    transition={{ duration: 0.6, delay: index * 0.05 }}
     className="card-cyber overflow-hidden"
   >
     {/* Hero image */}
-    <div className="relative h-48 sm:h-64 md:h-80 overflow-hidden">
+    <div className={`relative overflow-hidden ${compact ? 'h-40 sm:h-48' : 'h-48 sm:h-64 md:h-80'}`}>
       <img src={report.image} alt={report.title} className="w-full h-full object-cover" />
       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent" />
       <div className="absolute top-4 right-4">
@@ -616,6 +616,8 @@ const ReportCard = ({ report, index }: { report: Report; index: number }) => (
 const allReports = [...myReports, ...notableReports];
 
 const ZeroDay = () => {
+  const [layout, setLayout] = useState<'list' | 'grid'>('list');
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="scanline" />
@@ -672,6 +674,26 @@ const ZeroDay = () => {
             </div>
           </motion.div>
 
+          {/* LAYOUT TOGGLE */}
+          <div className="flex justify-end mb-8">
+            <div className="flex items-center gap-1 p-1 rounded-lg border border-primary/20 bg-card/50">
+              <button
+                onClick={() => setLayout('list')}
+                className={`p-2 rounded transition-all font-mono text-xs flex items-center gap-1.5 ${layout === 'list' ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-primary'}`}
+              >
+                <LayoutList className="w-4 h-4" />
+                <span className="hidden sm:inline">List</span>
+              </button>
+              <button
+                onClick={() => setLayout('grid')}
+                className={`p-2 rounded transition-all font-mono text-xs flex items-center gap-1.5 ${layout === 'grid' ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-primary'}`}
+              >
+                <LayoutGrid className="w-4 h-4" />
+                <span className="hidden sm:inline">Grid</span>
+              </button>
+            </div>
+          </div>
+
           {/* MY REPORTS */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -685,9 +707,9 @@ const ZeroDay = () => {
             </h2>
           </motion.div>
 
-          <div className="space-y-8 sm:space-y-12 mb-16">
+          <div className={layout === 'grid' ? 'grid md:grid-cols-2 gap-6 mb-16' : 'space-y-8 sm:space-y-12 mb-16'}>
             {myReports.map((report, index) => (
-              <ReportCard key={report.id} report={report} index={index} />
+              <ReportCard key={report.id} report={report} index={index} compact={layout === 'grid'} />
             ))}
           </div>
 
@@ -707,9 +729,9 @@ const ZeroDay = () => {
             </p>
           </motion.div>
 
-          <div className="space-y-8 sm:space-y-12">
+          <div className={layout === 'grid' ? 'grid md:grid-cols-2 gap-6' : 'space-y-8 sm:space-y-12'}>
             {notableReports.map((report, index) => (
-              <ReportCard key={report.id} report={report} index={index} />
+              <ReportCard key={report.id} report={report} index={index} compact={layout === 'grid'} />
             ))}
           </div>
 
