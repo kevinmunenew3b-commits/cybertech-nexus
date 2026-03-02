@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, Github, Heart, ArrowLeft, ShoppingCart, ThumbsUp, Share2, LayoutGrid, LayoutList } from 'lucide-react';
+import { ExternalLink, Github, Heart, ShoppingCart, ThumbsUp, Share2, LayoutGrid, LayoutList } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
@@ -174,20 +176,7 @@ const Projects = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="scanline" />
-
-      {/* HEADER */}
-      <header className="fixed top-0 left-0 right-0 z-40 bg-background/90 backdrop-blur-md border-b border-primary/20">
-        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-          <Link
-            to="/"
-            className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span className="font-mono">Back to Home</span>
-          </Link>
-          <span className="font-mono text-primary">&lt;projects/&gt;</span>
-        </div>
-      </header>
+      <Navigation />
 
       {/* MAIN */}
       <main className="pt-24 pb-16">
@@ -361,6 +350,7 @@ const Projects = () => {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 };
