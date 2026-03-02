@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, Github, Heart, ArrowLeft, ShoppingCart, ThumbsUp, Share2 } from 'lucide-react';
+import { ExternalLink, Github, Heart, ArrowLeft, ShoppingCart, ThumbsUp, Share2, LayoutGrid, LayoutList } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
@@ -169,6 +169,8 @@ const ShareButton = ({ title }: { title: string }) => {
    PROJECTS COMPONENT
 ================================ */
 const Projects = () => {
+  const [layout, setLayout] = useState<'grid' | 'list'>('grid');
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="scanline" />
@@ -206,8 +208,28 @@ const Projects = () => {
             </p>
           </motion.div>
 
+          {/* LAYOUT TOGGLE */}
+          <div className="flex justify-end mb-8">
+            <div className="flex items-center gap-1 p-1 rounded-lg border border-primary/20 bg-card/50">
+              <button
+                onClick={() => setLayout('list')}
+                className={`p-2 rounded transition-all font-mono text-xs flex items-center gap-1.5 ${layout === 'list' ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-primary'}`}
+              >
+                <LayoutList className="w-4 h-4" />
+                <span className="hidden sm:inline">List</span>
+              </button>
+              <button
+                onClick={() => setLayout('grid')}
+                className={`p-2 rounded transition-all font-mono text-xs flex items-center gap-1.5 ${layout === 'grid' ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-primary'}`}
+              >
+                <LayoutGrid className="w-4 h-4" />
+                <span className="hidden sm:inline">Grid</span>
+              </button>
+            </div>
+          </div>
+
           {/* PROJECTS GRID */}
-          <div className="grid md:grid-cols-2 gap-8 mb-16">
+          <div className={layout === 'grid' ? 'grid md:grid-cols-2 gap-8 mb-16' : 'space-y-8 mb-16'}>
             {projects.map((project, index) => (
               <motion.div
                 key={project.id}
