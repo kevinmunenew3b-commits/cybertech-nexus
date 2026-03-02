@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, AlertTriangle, Clock, Shield, Bug, ExternalLink, ChevronRight, ThumbsUp, Heart, Share2, LayoutGrid, LayoutList } from 'lucide-react';
+import { AlertTriangle, Clock, Shield, Bug, ExternalLink, ChevronRight, ThumbsUp, Heart, Share2, LayoutGrid, LayoutList } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import zerodayOpenaiImg from '@/assets/zeroday-openai.jpg';
@@ -621,17 +623,7 @@ const ZeroDay = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="scanline" />
-
-      {/* HEADER */}
-      <header className="fixed top-0 left-0 right-0 z-40 bg-background/90 backdrop-blur-md border-b border-primary/20">
-        <div className="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-          <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-            <ArrowLeft className="w-5 h-5" />
-            <span className="font-mono text-sm sm:text-base">Back to Home</span>
-          </Link>
-          <span className="font-mono text-primary text-sm sm:text-base">&lt;zero_day/&gt;</span>
-        </div>
-      </header>
+      <Navigation />
 
       {/* MAIN */}
       <main className="pt-24 pb-16">
@@ -761,6 +753,7 @@ const ZeroDay = () => {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 };
