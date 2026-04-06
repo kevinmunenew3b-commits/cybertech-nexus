@@ -6,44 +6,44 @@
 
 @layer base {
   :root {
-    --background: 220 20% 4%;
-    --foreground: 180 100% 95%;
+    --background: 0 0% 3%;
+    --foreground: 0 0% 93%;
 
-    --card: 220 20% 7%;
-    --card-foreground: 180 100% 95%;
+    --card: 0 0% 6%;
+    --card-foreground: 0 0% 93%;
 
-    --popover: 220 20% 7%;
-    --popover-foreground: 180 100% 95%;
+    --popover: 0 0% 6%;
+    --popover-foreground: 0 0% 93%;
 
-    --primary: 180 100% 50%;
-    --primary-foreground: 220 20% 4%;
+    --primary: 210 100% 55%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 150 100% 50%;
-    --secondary-foreground: 220 20% 4%;
+    --secondary: 210 60% 40%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 15% 15%;
-    --muted-foreground: 220 10% 60%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 55%;
 
-    --accent: 280 100% 60%;
-    --accent-foreground: 180 100% 95%;
+    --accent: 210 80% 65%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 180 50% 20%;
-    --input: 220 15% 15%;
-    --ring: 180 100% 50%;
+    --border: 210 30% 18%;
+    --input: 0 0% 12%;
+    --ring: 210 100% 55%;
 
     --radius: 0.5rem;
 
     /* Custom tech theme variables */
-    --glow-primary: 0 0 20px hsl(180 100% 50% / 0.5);
-    --glow-secondary: 0 0 20px hsl(150 100% 50% / 0.5);
-    --glow-accent: 0 0 20px hsl(280 100% 60% / 0.5);
-    --gradient-cyber: linear-gradient(135deg, hsl(180 100% 50% / 0.1) 0%, hsl(150 100% 50% / 0.1) 100%);
-    --gradient-hero: linear-gradient(180deg, hsl(220 20% 4%) 0%, hsl(220 20% 8%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(220 20% 8%) 0%, hsl(220 20% 5%) 100%);
-    --grid-color: hsl(180 100% 50% / 0.03);
+    --glow-primary: 0 0 20px hsl(210 100% 55% / 0.5), 0 0 40px hsl(210 100% 55% / 0.2);
+    --glow-secondary: 0 0 20px hsl(210 60% 40% / 0.5);
+    --glow-accent: 0 0 20px hsl(210 80% 65% / 0.5);
+    --gradient-cyber: linear-gradient(135deg, hsl(210 100% 55% / 0.1) 0%, hsl(210 60% 40% / 0.1) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(0 0% 3%) 0%, hsl(0 0% 6%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 7%) 0%, hsl(0 0% 4%) 100%);
+    --grid-color: hsl(210 100% 55% / 0.03);
   }
 }
 
