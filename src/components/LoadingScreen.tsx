@@ -49,35 +49,37 @@ const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      {/* Cyber grid background */}
-      <div className="absolute inset-0 cyber-grid opacity-30" />
+      {/* Subtle grid */}
+      <div className="absolute inset-0 cyber-grid opacity-20" />
 
       {/* Scanlines */}
       <div className="scanline" />
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center gap-6 px-6">
-        {/* Profile Picture */}
+      <div className="relative z-10 flex flex-col items-center gap-8 px-6">
+        {/* Profile Picture with glow ring */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
           className="relative"
         >
-          <div className="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-primary/50 animate-pulse-glow">
+          <div className="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-primary/40 animate-pulse-glow">
             <img
               src={profileAvatar}
               alt="Kevin Munene"
               width={144}
               height={144}
-              className="w-full h-full object-cover grayscale"
+              className="w-full h-full object-cover"
+              style={{ filter: 'grayscale(0.6) brightness(0.9) contrast(1.1)' }}
             />
           </div>
-          {/* Glow ring */}
-          <div className="absolute inset-0 rounded-full border border-primary/20 animate-ping opacity-30" />
+          {/* Outer glow ring */}
+          <div className="absolute -inset-2 rounded-full border border-primary/15 animate-ping opacity-20" />
+          <div className="absolute -inset-1 rounded-full border border-primary/10" />
         </motion.div>
 
-        {/* Logo / Title */}
+        {/* Title */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -87,23 +89,27 @@ const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
           <h1 className="font-mono text-2xl md:text-4xl font-bold text-primary glow-text tracking-widest uppercase">
             Kevin Munene
           </h1>
-          <p className="font-mono text-xs md:text-sm text-muted-foreground mt-2 tracking-wider">
+          <p className="font-mono text-xs md:text-sm text-muted-foreground mt-3 tracking-wider">
             [ SYSTEM BOOT SEQUENCE ]
           </p>
         </motion.div>
 
         {/* Progress bar */}
-        <div className="w-64 md:w-80">
-          <div className="h-1 w-full bg-muted rounded-full overflow-hidden border border-primary/20">
+        <div className="w-72 md:w-96">
+          <div className="h-0.5 w-full bg-muted rounded-full overflow-hidden">
             <motion.div
-              className="h-full bg-primary"
-              style={{ width: `${progress}%` }}
+              className="h-full rounded-full"
+              style={{
+                width: `${progress}%`,
+                background: 'linear-gradient(90deg, hsl(160 100% 50%), hsl(190 100% 50%))',
+                boxShadow: '0 0 10px hsl(160 100% 50% / 0.5)',
+              }}
               transition={{ duration: 0.05 }}
             />
           </div>
-          <div className="flex justify-between mt-2 font-mono text-xs text-primary/70">
+          <div className="flex justify-between mt-3 font-mono text-xs text-primary/60">
             <span>{statusText}</span>
-            <span>{Math.floor(progress)}%</span>
+            <span className="text-primary">{Math.floor(progress)}%</span>
           </div>
         </div>
 
@@ -112,14 +118,14 @@ const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="font-mono text-[10px] md:text-xs text-muted-foreground/60 space-y-1 max-w-md"
+          className="font-mono text-[10px] md:text-xs text-muted-foreground/50 space-y-1.5 max-w-md"
         >
-          {progress > 10 && <p>&gt; ssh root@192.168.1.1 -p 443</p>}
-          {progress > 25 && <p>&gt; sudo nmap -sS -O target_host</p>}
-          {progress > 45 && <p>&gt; cat /etc/shadow | hashcat -m 1800</p>}
-          {progress > 65 && <p>&gt; msfconsole -q -x "use exploit/multi"</p>}
+          {progress > 10 && <p className="text-muted-foreground/40">&gt; ssh root@192.168.1.1 -p 443</p>}
+          {progress > 25 && <p className="text-muted-foreground/40">&gt; sudo nmap -sS -O target_host</p>}
+          {progress > 45 && <p className="text-muted-foreground/40">&gt; cat /etc/shadow | hashcat -m 1800</p>}
+          {progress > 65 && <p className="text-muted-foreground/40">&gt; msfconsole -q -x "use exploit/multi"</p>}
           {progress > 85 && (
-            <p className="text-primary">&gt; Connection established. Welcome back.</p>
+            <p className="text-primary glow-text">&gt; Connection established. Welcome back.</p>
           )}
         </motion.div>
       </div>

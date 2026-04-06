@@ -17,16 +17,15 @@ const MatrixRain = () => {
     resize();
     window.addEventListener('resize', resize);
 
-    const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン{}[]<>/\\|;:=+-*&^%$#@!~`';
+    const chars = '01アイウエオカキクケコサシスセソ{}[]<>/\\|;:=+-*&^%$#@!~`';
     const fontSize = 14;
     const columns = Math.floor(canvas.width / fontSize);
     const drops: number[] = Array(columns).fill(1);
 
     const draw = () => {
-      ctx.fillStyle = 'rgba(10, 12, 16, 0.05)';
+      ctx.fillStyle = 'rgba(8, 12, 10, 0.06)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = 'hsl(180, 100%, 50%)';
       ctx.font = `${fontSize}px JetBrains Mono, monospace`;
 
       for (let i = 0; i < drops.length; i++) {
@@ -34,10 +33,9 @@ const MatrixRain = () => {
         const x = i * fontSize;
         const y = drops[i] * fontSize;
 
-        // Vary opacity for depth
-        ctx.globalAlpha = Math.random() * 0.3 + 0.1;
+        // Cyan glow color matching the theme
+        ctx.fillStyle = `hsla(160, 100%, 50%, ${Math.random() * 0.25 + 0.05})`;
         ctx.fillText(char, x, y);
-        ctx.globalAlpha = 1;
 
         if (y > canvas.height && Math.random() > 0.975) {
           drops[i] = 0;
@@ -46,7 +44,7 @@ const MatrixRain = () => {
       }
     };
 
-    const interval = setInterval(draw, 50);
+    const interval = setInterval(draw, 55);
 
     return () => {
       clearInterval(interval);
@@ -57,7 +55,7 @@ const MatrixRain = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0 opacity-30"
+      className="fixed inset-0 pointer-events-none z-0 opacity-25"
       aria-hidden="true"
     />
   );
