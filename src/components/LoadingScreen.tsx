@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import profileAvatar from '@/assets/profile-avatar.jpg';
 
 const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
   const [progress, setProgress] = useState(0);
@@ -55,12 +56,32 @@ const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
       <div className="scanline" />
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center gap-8 px-6">
+      <div className="relative z-10 flex flex-col items-center gap-6 px-6">
+        {/* Profile Picture */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+          className="relative"
+        >
+          <div className="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-primary/50 animate-pulse-glow">
+            <img
+              src={profileAvatar}
+              alt="Kevin Munene"
+              width={144}
+              height={144}
+              className="w-full h-full object-cover grayscale"
+            />
+          </div>
+          {/* Glow ring */}
+          <div className="absolute inset-0 rounded-full border border-primary/20 animate-ping opacity-30" />
+        </motion.div>
+
         {/* Logo / Title */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
           className="text-center"
         >
           <h1 className="font-mono text-2xl md:text-4xl font-bold text-primary glow-text tracking-widest uppercase">
